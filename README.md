@@ -1,37 +1,40 @@
-# capacitor-rollbar
+# My Capacitor Rollbar Plugin
 
-This plugin will help to intergrate Rollbar with your capacitor project to log all the andorid events.
+My Capacitor Rollbar Plugin is a custom Capacitor plugin that integrates the Rollbar SDK into your Android app, allowing you to capture and report errors to the Rollbar platform.
 
-## Install
+## Installation
+
+To use this plugin in your Capacitor project, follow these steps:
+
+1. Install the plugin using npm or yarn:
 
 ```bash
 npm install capacitor-rollbar
-npx cap sync
+# or
+yarn add capacitor-rollbar
 ```
 
-## API
+## Android Setup
 
-<docgen-index>
+To enable Rollbar error reporting in your Android app, you need to perform the following steps:
 
-* [`echo(...)`](#echo)
+Add the Rollbar access token to your capacitor.config.json:
 
-</docgen-index>
-
-<docgen-api>
-<!--Update the source file JSDoc comments and rerun docgen to update the docs below-->
-
-### echo(...)
-
-```typescript
-echo(options: { value: string; }) => Promise<{ value: string; }>
+```bash
+{
+  "plugins": {
+    "MyPlugin": {
+      "accessToken": "YOUR_ROLLBAR_ACCESS_TOKEN",
+      "environment": "development" // or "production" based on your environment
+    }
+  }
+}
 ```
 
-| Param         | Type                            |
-| ------------- | ------------------------------- |
-| **`options`** | <code>{ value: string; }</code> |
+## Contributing
 
-**Returns:** <code>Promise&lt;{ value: string; }&gt;</code>
+Contributions to this plugin are welcome! If you find a bug or have an improvement idea, please open an issue or submit a pull request.
 
---------------------
+## License
 
-</docgen-api>
+This plugin is open-source and available under the MIT License.
