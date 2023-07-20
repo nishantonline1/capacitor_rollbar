@@ -6,17 +6,45 @@ import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
 
+
 @CapacitorPlugin(name = "CapacitorRollbar")
 public class CapacitorRollbarPlugin extends Plugin {
 
-    private CapacitorRollbar implementation = new CapacitorRollbar();
-
     @PluginMethod
-    public void echo(PluginCall call) {
-        String value = call.getString("value");
+    public void updateAndroidManifest(PluginCall call) {
+        String accessToken = call.getString("accessToken");
 
-        JSObject ret = new JSObject();
-        ret.put("value", implementation.echo(value));
-        call.resolve(ret);
+        if (accessToken != null) {
+            updateMetaInManifest(accessToken);
+
+            JSObject result = new JSObject();
+            result.put("message", "Meta-data added to AndroidManifest.xml successfully.");
+            call.success(result);
+        } else {
+            call.reject("Invalid access token provided.");
+        }
+    }
+
+    private void updateMetaInManifest(String accessToken) {
+        try {
+            // Update the AndroidManifest.xml with the provided meta-data
+            getBridge()
+                .getActivity()
+                .runOnUiThread(
+                    () -> {
+                        try {
+                            String packageName = getBridge().getContext().getPackageName();
+                            getBridge()
+                                .getContext()
+                                .getApplicationInfo()
+                                .metaData.putString(packageName + ".com.rollbar.android.ACCESS_TOKEN", accessToken);
+                        } catch (Exception e) {
+                            Log.e("MyPlugin", "Error updating AndroidManifest.xml: " + e.getMessage());
+                        }
+                    }
+                );
+        } catch (Exception e) {
+            Log.e("MyPlugin", "Error updating AndroidManifest.xml: " + e.getMessage());
+        }
     }
 }
