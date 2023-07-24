@@ -23,7 +23,7 @@ Add the Rollbar access token to your capacitor.config.json:
 ```bash
 {
   "plugins": {
-    "MyPlugin": {
+    "CapacitorRollbar": {
       "accessToken": "YOUR_ROLLBAR_ACCESS_TOKEN",
       "environment": "development" // or "production" based on your environment
     }
