@@ -1,6 +1,6 @@
-# My Capacitor Rollbar Plugin
+# Capacitor Rollbar Plugin
 
-My Capacitor Rollbar Plugin is a custom Capacitor plugin that integrates the Rollbar SDK into your Android app, allowing you to capture and report errors to the Rollbar platform.
+Capacitor Rollbar Plugin is a custom Capacitor plugin that integrates the Rollbar SDK into your Android app, allowing you to capture and report errors to the Rollbar platform.
 
 ## Installation
 
