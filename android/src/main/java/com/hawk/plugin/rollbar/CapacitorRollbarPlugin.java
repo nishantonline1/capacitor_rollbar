@@ -1,12 +1,17 @@
 package com.hawk.plugin.rollbar;
 
+import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
+import com.getcapacitor.PluginCall;
+import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
 import com.rollbar.android.Rollbar;
 
 
 @CapacitorPlugin(name = "CapacitorRollbar")
 public class CapacitorRollbarPlugin extends Plugin {
+
+    private Rollbar rollbar;
 
     @Override
     public void load() {
@@ -17,7 +22,8 @@ public class CapacitorRollbarPlugin extends Plugin {
         String environment = getConfig().getString("environment");
         Rollbar.init(getContext(), accessToken, environment, true);
         String deviceBuildSerialNo = android.os.Build.SERIAL;
-        Rollbar.setPersonData(null, null, null, deviceBuildSerialNo);
+        rollbar = Rollbar.instance();
+        rollbar.setPersonData(deviceBuildSerialNo, "", "");
     }
 
 
@@ -25,14 +31,13 @@ public class CapacitorRollbarPlugin extends Plugin {
     public void setPersonData(PluginCall call) {
         JSObject userData = call.getObject("userData");
         if (userData != null) {
-            String userId = userData.getString("userId");
             String userEmail = userData.getString("userEmail");
             String userName = userData.getString("userName");
             String deviceBuildSerialNo = android.os.Build.SERIAL;
-            Rollbar.setPersonData(userId, userEmail, userName, deviceBuildSerialNo);
+            rollbar.setPersonData(deviceBuildSerialNo, userEmail, userName);
             call.resolve();
         }else{
-            call.reject("Invalid user data provided.")
+            call.reject("Invalid user data provided.");
         }
     }
 
