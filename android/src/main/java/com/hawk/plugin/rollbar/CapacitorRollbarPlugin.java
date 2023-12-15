@@ -20,7 +20,8 @@ public class CapacitorRollbarPlugin extends Plugin {
         // Retrieve the access token from capacitor.config.json
         String accessToken = getConfig().getString("accessToken");
         String environment = getConfig().getString("environment");
-        Rollbar.init(getContext(), accessToken, environment, true);
+        Boolean includeLogCat = getConfig().getBoolean("includeLogcat", false);
+        Rollbar.init(getContext(), accessToken, environment, true, includeLogCat);
         String deviceBuildSerialNo = android.os.Build.SERIAL;
         rollbar = Rollbar.instance();
         rollbar.setPersonData(deviceBuildSerialNo, "", "");
