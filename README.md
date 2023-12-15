@@ -25,7 +25,8 @@ Add the Rollbar access token to your capacitor.config.json:
   "plugins": {
     "CapacitorRollbar": {
       "accessToken": "YOUR_ROLLBAR_ACCESS_TOKEN",
-      "environment": "development" // or "production" based on your environment
+      "environment": "development" // or "production" based on your environment,
+      "includeLogcat": false // setting this to true will include the last 100 logcat log messages along with the rollbar report
     }
   }
 }
